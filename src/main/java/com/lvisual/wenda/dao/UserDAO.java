@@ -4,8 +4,6 @@ import com.lvisual.wenda.model.User;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 
-import javax.jws.soap.SOAPBinding;
-
 @Mapper
 @Component
 public interface UserDAO {
@@ -18,8 +16,10 @@ public interface UserDAO {
    @Update({"update user  set password = #{password} where id = #{id}"})
    void upDatePassword(User user);
 
+
    @Delete({"delete from user where id = #{id}"})
    void deleteById(int id);
 
+   User selectByName(@Param("name")String name);
 }
 
