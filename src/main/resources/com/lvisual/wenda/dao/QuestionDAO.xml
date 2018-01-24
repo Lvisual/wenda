@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.lvisual.wenda.dao.QuestionDAO">
+<sql id = "question">question</sql>
+<sql id = "selectFields">id,title,comment,comment_count,create_date,user_id</sql>
+<select id ="selectQuestionById" resultType = "com.lvisual.wenda.model.Question">
+    SELECT
+    <include refid="selectFields"/>
+    FROM
+    <include refid="question"/>
+    WHERE id = #{Id}
+</select>
+</mapper>
+
