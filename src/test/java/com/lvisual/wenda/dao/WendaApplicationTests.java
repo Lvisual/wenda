@@ -19,7 +19,7 @@ public class WendaApplicationTests {
 	@Test
 	public void contextLoads() {
 		Question question = new Question();
-		question = questiondao.selectQuestionById(1);
+		question = questiondao.selectQuestionById(3);
 		//User user = new User();
 		//userdao.selectById(5);
 		//user = userdao.selectByName("lk");

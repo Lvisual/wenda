@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.*;
 import java.util.Enumeration;
+import java.util.Map;
 
 @Controller
 public class IndexController {
@@ -34,9 +35,9 @@ public class IndexController {
     }
 
     @RequestMapping(path = {"/lk"}, method = {RequestMethod.GET})
-    public String index2(Model model){
-        model.addAttribute("name","lk");
-        return "test";
+    public String index2(Map<String,Object> map){
+        map.put("name","lk");
+        return  "test2";
         //return "lk" + wendaService.getMessage(5);
     }
 }
