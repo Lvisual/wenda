@@ -7,19 +7,25 @@ import org.springframework.stereotype.Component;
 @Mapper
 @Component
 public interface UserDAO {
-   @Insert({("insert into user (name,password) values(#{name},#{password})")})
+
+   String TABLE_NAME = " user";
+   String INSERT_FIELDS = "name, password,salt,head_url";
+   String SELECT_FIELDS = "id ," + INSERT_FIELDS;
+
+   @Insert({"insert into ",TABLE_NAME,"(",INSERT_FIELDS,")values(#{name},#{password},#{salt},#{headUrl})"})
    int addUser(User user);
 
-   @Select({"select name,password from user where id = #{id}"})
+   @Select({"select ",SELECT_FIELDS," from ",TABLE_NAME," where id = #{id}"})
    User selectById(int id);
 
-   @Update({"update user  set password = #{password} where id = #{id}"})
-   void upDatePassword(User user);
+   @Update({"update ",TABLE_NAME," set password = #{password} where id = #{id}"})
+   void updatePassword(User user);
 
-
-   @Delete({"delete from user where id = #{id}"})
+   @Delete({"delete from ",TABLE_NAME," where id = #{id}"})
    void deleteById(int id);
 
-   User selectByName(@Param("name")String name);
+   @Select({"select ",SELECT_FIELDS," from ",TABLE_NAME," where name = #{name}"})
+   User selectByName(String name);
+
 }
 

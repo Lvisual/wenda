@@ -3,14 +3,17 @@
                 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="com.lvisual.wenda.dao.QuestionDAO">
-<sql id = "question">question</sql>
+<sql id = "table">question</sql>
 <sql id = "selectFields">id,title,comment,comment_count,create_date,user_id</sql>
-<select id ="selectQuestionById" resultType = "com.lvisual.wenda.model.Question">
+<select id ="selectLatestQuestions" resultType = "com.lvisual.wenda.model.Question">
     SELECT
     <include refid="selectFields"/>
     FROM
-    <include refid="question"/>
-    WHERE id = #{Id}
+    <include refid="table"/>
+    <if test = "userId != 0">
+        WHERE user_id = #{userId}
+    </if>
+    ORDER BY id DESC
+    LIMIT #{offset},#{limit}
 </select>
 </mapper>
-

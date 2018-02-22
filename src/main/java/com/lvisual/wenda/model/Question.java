@@ -5,7 +5,7 @@ import java.util.Date;
 public class Question {
     private  int id;
     private  String title;
-    private  String comment;
+    private  String content;
     private  Date createdDate;
     private  int userId;
     private  int commentCount;
@@ -27,11 +27,11 @@ public class Question {
     }
 
     public String getComment() {
-        return comment;
+        return content;
     }
 
     public void setComment(String comment) {
-        this.comment = comment;
+        this.content = comment;
     }
 
     public Date getCreatedDate() {

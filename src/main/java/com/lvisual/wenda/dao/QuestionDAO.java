@@ -6,15 +6,19 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Mapper
 @Component
 public interface  QuestionDAO{
-    @Insert({"insert into question (title, comment, create_date, user_id, comment_count) values (#{title},#{comment},#{createdDate},#{userId},#{commentCount})"})
+    String TABLE_NAME = " question ";
+    String INSERT_FIELDS = " title, content, created_date, user_id, comment_count";
+    String SELECT_FIELDS = " id, " + INSERT_FIELDS;
+
+    @Insert({"insert into ",TABLE_NAME,"(",INSERT_FIELDS,")values(#{title},#{content},#{createdDate},#{userId},#{commentCount})"})
     int addQuestion(Question question);
 
-    Question selectQuestionById(int id);
-
-
+    List<Question> selectLatestQuestions(@Param("userId")int userId,@Param("offset") int offset,@Param("limit") int limit);
 }
 
 
