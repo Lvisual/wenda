@@ -1,4 +1,5 @@
 package com.lvisual.wenda.controller;
+import com.lvisual.wenda.model.HostHolder;
 import com.lvisual.wenda.model.User;
 import com.lvisual.wenda.service.WenDaService;
 import net.sf.json.JSONObject;
@@ -6,12 +7,14 @@ import org.apache.ibatis.javassist.compiler.ast.Variable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.jws.soap.SOAPBinding;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,13 +29,14 @@ public class IndexController {
     @Autowired
     WenDaService wendaService;
 
+    @Autowired
+    HostHolder hostHolder;
+
     @RequestMapping(path = {"/", "/index"}, method = {RequestMethod.GET})
-    //@ResponseBody
     public String index(Model model,HttpSession httpSession) {
-        logger.info("VISIT HOME");
-        model.addAttribute("test","hehe");
-        return "demo";
-       // return wendaService.getMessage(2) + "Hello NowCoder" + httpSession.getAttribute("msg");
+        User user = hostHolder.getUser();
+        model.addAttribute("user",user);
+        return "header";
     }
 
     @RequestMapping(path = {"/profile/{groupId}/{userId}"})
@@ -43,6 +47,7 @@ public class IndexController {
                           @RequestParam(value = "key", required = false) String key) {
         return String.format("Profile Page of %s / %d, t:%d k: %s", groupId, userId, type, key);
     }
+
 
     @RequestMapping(path = {"/vm"}, method = {RequestMethod.GET})
     public String template(Model model) {
